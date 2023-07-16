@@ -1,0 +1,35 @@
+version: '3.6'
+
+services:
+  database:
+    image: postgres:10.16
+    restart: always
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=products
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app
+  mongodb:
+    image: mongo:6-jammy
+    ports:
+      - '27017:27017'
+    environment:
+      - MONGO_INITDB_DATABASE=products
+    volumes:
+      - dbdata7:/data/db
+    networks:
+      - app
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - '5672:5672'
+volumes:
+  pgdata:
+  dbdata7:
+networks:
+  app:
